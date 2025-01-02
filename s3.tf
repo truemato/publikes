@@ -1,5 +1,11 @@
 resource "aws_s3_bucket" "bucket" {
-  bucket = var.s3_bucket_name
+  bucket = "kokodeyattaru"
+
+  acl = "private"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 resource "aws_s3_bucket_public_access_block" "bucket" {
   bucket = aws_s3_bucket.bucket.id
