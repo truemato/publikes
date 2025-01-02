@@ -1,3 +1,7 @@
 resource "aws_secretsmanager_secret" "secret" {
-  name = "${var.name_prefix}/secret"
+  name = "publikes-prd/secret"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
