@@ -14,24 +14,19 @@ data "aws_cloudfront_cache_policy" "Managed-CachingOptimized" {
 #  name = "UseOriginCacheControlHeaders"
 #}
 resource "aws_cloudfront_cache_policy" "data" {
-  name        = "${var.name_prefix}-data"
-  comment     = "${var.name_prefix} CachingOptimized + min=0"
-  default_ttl = 0
-  max_ttl     = 31536000 # 1 yr
+  name = "publikes-prd-data"
+
+  default_ttl = 3600
+  max_ttl     = 86400
   min_ttl     = 0
+
   parameters_in_cache_key_and_forwarded_to_origin {
     enable_accept_encoding_brotli = true
     enable_accept_encoding_gzip   = true
+  }
 
-    cookies_config {
-      cookie_behavior = "none"
-    }
-    headers_config {
-      header_behavior = "none"
-    }
-    query_strings_config {
-      query_string_behavior = "none"
-    }
+  lifecycle {
+    prevent_destroy = true
   }
 }
 
