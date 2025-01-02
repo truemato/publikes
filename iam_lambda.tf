@@ -1,10 +1,24 @@
-resource "aws_iam_role" "Lambda" {
-  name                 = "${var.iam_role_prefix}Lambda"
-  description          = "publikes ${var.name_prefix} Lambda"
-  assume_role_policy   = data.aws_iam_policy_document.Lambda-trust.json
-  max_session_duration = 3600
-}
 
+resource "aws_iam_role" "Lambda" {
+  name = "PublikesPrdLambda"  # インポート対象のIAMロール名
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        },
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
 data "aws_iam_policy_document" "Lambda-trust" {
   statement {
     effect  = "Allow"
