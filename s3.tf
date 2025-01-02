@@ -1,8 +1,6 @@
 resource "aws_s3_bucket" "bucket" {
   bucket = "kokodeyattaru"
 
-  acl = "private"
-
   lifecycle {
     prevent_destroy = true
   }
